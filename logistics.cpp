@@ -1,3 +1,16 @@
+/**********************************
+  Sistema de inventario con UAVs
+
+  Martinez Valle, Braulio Emmanuel
+  Ramirez Linarez, Axel
+  Vazquez Tapia, Francisco
+
+  Sistemas Operativos en Tiempo Real
+          IECSA-05A
+            2020
+***********************************/
+
+
 #include <iostream>
 
 class drone
@@ -8,8 +21,12 @@ public:
     /*Estado del drone
     0->Disponible
     1->Transporte
-    2->Inspección*/
+    2->Inspección
+    3->En reparacion*/
     int battery //Porcentaje de batería del drone
+    void transport();
+    void inspect();
+    void maintenance();
 };
 
 class package
@@ -29,7 +46,8 @@ class conveyor_belt
 public:
     int length;//longitud de la banda
     int speed;//velocidad de movmiento de la banda
-
+    int quantity;//cantidad de paquetes generados
+    void generatePkg(); //F. para generar paquetes
 };
 
 
