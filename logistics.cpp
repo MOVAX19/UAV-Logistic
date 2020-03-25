@@ -1,13 +1,13 @@
 /**********************************
-  Sistema de inventario con UAVs
+      Sistema de inventario con UAVs
 
-  Martinez Valle, Braulio Emmanuel
-  Ramirez Linarez, Axel
-  Vazquez Tapia, Francisco
+      Martinez Valle, Braulio Emmanuel
+      Ramirez Linarez, Axel
+      Vazquez Tapia, Francisco
 
-  Sistemas Operativos en Tiempo Real
-          IECSA-05A
-            2020
+      Sistemas Operativos en Tiempo Real
+              IECSA-05A
+                2020
 ***********************************/
 
 
