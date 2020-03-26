@@ -33,6 +33,8 @@ public:
     void transport();//F. para transportar pqts
     void inspect();//F. para inspeccionar pqts
     void maintenance();//F. para el mantenimiento del drone
+    drone(int, int, int, int);//constructor
+    ~drone();//desctructor
 };
 
 class package
@@ -61,15 +63,19 @@ public:
     ~conveyor_belt();
 };
 
-
+////////////////////////////////////main/////////////////////////////////////////////////////
 int main(void){
   conveyor_belt belt(1,10);
   vector<package> pkgs;
   vector<int>::iterator iter=belt.pkgList.begin();
-  //genera 5 paquetes
-  while (belt.quantity<6) {
+  int w,factor;
+  if battery<(battery-(1.5+W/100)){//conocer el estado de bateria
+
+  while (belt.quantity<6) { //genera 5 paquetes
+
     pkgs.push_back(belt.generatePkg());
   }
+}
   //imprime los ids de los paquetes existentes
   while (iter!=belt.pkgList.end()) {
     cout<<"Package: "<<*(iter)<<"\n"<<endl;
@@ -77,7 +83,21 @@ int main(void){
   //linea sin importancia
   std::cout("Hello world");
 }
+////////////////////////////////////drone/////////////////////////////////////////////////////
+dorne::package(int _id, int _state, int _battery, char _pkgId))
+{
+  id = _id;
+  state = _state;
+  battery = battery;
+  pkgId = _pkgId;
+}
 
+drone::~drone()
+{
+  cout<<"Drone "<<id<<" is being destroyed"<<endl;
+}
+
+////////////////////////////////////package/////////////////////////////////////////////////////
 package::package(int _id, char addss, bool ste)
 {
   id=_id;
@@ -89,7 +109,7 @@ package::~package()
 {
   cout<<"Package "<<id<<" is being destroyed"<<endl;
 }
-
+////////////////////////////////////conveyor_belt/////////////////////////////////////////////////////
 conveyor_belt::conveyor_belt(int _length, int _speed)
 {
   length=_length;
