@@ -28,12 +28,17 @@ public:
     1->Transporte
     2->Inspección
     3->En reparacion*/
-    int battery //Porcentaje de batería del drone
-    char pkgId;//Identificador para el paquete transportado actualmente.
+    int battery; //Porcentaje de batería del drone
+    int pkgId;//Identificador para el paquete transportado actualmente.
+    bool type;//Define el tipo de drones
+    /*
+    0->carga ligera. Secciones A,B
+    1->carga pesada. Secciones C,D
+    */
     void transport();//F. para transportar pqts
     void inspect();//F. para inspeccionar pqts
     void maintenance();//F. para el mantenimiento del drone
-    drone(int, int, int, int);//constructor
+    drone(int, int, int, int,bool);//constructor
     ~drone();//desctructor
 };
 
@@ -43,6 +48,7 @@ public:
     int weight;//Peso del paquete
     char address;// Direccion del paquete: A,B,C,D
     bool priority;
+    int id;
     /*Tipo de envío
     0 -> envio normal
     1 -> envío express
@@ -63,38 +69,47 @@ public:
     ~conveyor_belt();
 };
 
+drone genDrones(int _pkgId);
+
 ////////////////////////////////////main/////////////////////////////////////////////////////
 int main(void){
   conveyor_belt belt(1,10);
+
   vector<package> pkgs;
-  vector<int>::iterator iter=belt.pkgList.begin();
-  int w,factor;
-  if battery<(battery-(1.5+W/100)){//conocer el estado de bateria
-
-  while (belt.quantity<6) { //genera 5 paquetes
-
+  vector<drone> drons;
+  vector<int>::iterator iter;
+  //int w,factor;
+  //if (battery<(battery-(1.5+W/100))){//conocer el estado de bateria
+  //Crear los paqutes
+  while (belt.quantity<5) { //genera 5 paquetes
     pkgs.push_back(belt.generatePkg());
+    std::cout<<"Paquete creado"<<std::endl;
   }
-}
   //imprime los ids de los paquetes existentes
+  iter=belt.pkgList.begin();
   while (iter!=belt.pkgList.end()) {
-    cout<<"Package: "<<*(iter)<<"\n"<<endl;
+    drons.push_back(genDrones(*(iter)));
+    std::cout<<"Drone creado"<<std::endl;
+    iter++;
   }
+  //crear los drones
+
   //linea sin importancia
-  std::cout("Hello world");
+  std::cout<<("\n\nHello world\n\n");
 }
 ////////////////////////////////////drone/////////////////////////////////////////////////////
-dorne::package(int _id, int _state, int _battery, char _pkgId))
+drone::drone(int _id, int _state, int _battery, int _pkgId, bool cargo)
 {
-  id = _id;
-  state = _state;
-  battery = battery;
-  pkgId = _pkgId;
+  id = _id; //Identificador para el drone
+  state = _state; //Estado del drone
+  battery = _battery; //bateria
+  pkgId = _pkgId; //Identificador del
+  type=cargo;
 }
 
 drone::~drone()
 {
-  cout<<"Drone "<<id<<" is being destroyed"<<endl;
+  //cout<<"Drone "<<id<<" is being destroyed"<<endl;
 }
 
 ////////////////////////////////////package/////////////////////////////////////////////////////
@@ -102,12 +117,12 @@ package::package(int _id, char addss, bool ste)
 {
   id=_id;
   address=addss;
-  state=ste;
+  priority=ste;
 }
 
 package::~package()
 {
-  cout<<"Package "<<id<<" is being destroyed"<<endl;
+  //cout<<"Package "<<id<<" is being destroyed"<<endl;
 }
 ////////////////////////////////////conveyor_belt/////////////////////////////////////////////////////
 conveyor_belt::conveyor_belt(int _length, int _speed)
@@ -119,26 +134,50 @@ conveyor_belt::conveyor_belt(int _length, int _speed)
   srand (time(NULL));
 }
 
+conveyor_belt::~conveyor_belt(){
+    std::cout<<"Adios,amigos!"<<endl;
+}
+
 package conveyor_belt::generatePkg()
 {
+  //std::cout<<"\nGenerando paquetes\n\n"<<std::endl;
   bool created=false, coincidence=false;
   int tempId;
+  char  adresss;
   vector<int>::iterator iter=pkgList.begin();
   //Verifica si el ID generado ya fue utilizado
   while (!created && quantity<6) {
+    coincidence=false;
     tempId=rand()%100 + 1;
-    while (!coincidence || iter!=pkgList.end()) {
-      if (*(iter)==tempId)
-      coincidence=true;
+    while (!coincidence && iter!=pkgList.end()) {
+      if (*(iter)==tempId){coincidence=true;}
       iter++;
+      //cout<<"Estoy aqui: "<<endl;
     }
   //Si no, se agrega a la lista de paquetes
     if (!coincidence) {
       pkgList.push_back(tempId);
       //se lleva el conteo de los paquetes creados.
       quantity++;
+      created=true;
     }
   }
-  package tempPkg(tempId,A,0);
+  srand(time(NULL));
+  for(int i = 0; i < 100; i++){
+
+  }
+  adresss = 'A' + rand() % (('D' - 'A') + 1);
+  package tempPkg(tempId,adresss/*direccion*/,0/*estado*/);
   return tempPkg;
+}
+
+
+/*****************************************************/
+drone genDrones(int _pkgId)//Funcion para generar drones
+{
+  //std::cout<<"\nGenerando paquetes\n\n"<<std::endl;
+  int tempId;
+  tempId=rand()%100 + 1;
+  drone tempDron(tempId, 0, 100,_pkgId,0);
+  return tempDron;
 }
