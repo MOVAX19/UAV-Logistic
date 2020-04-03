@@ -74,9 +74,11 @@ drone genDrones(int _pkgId);
 ////////////////////////////////////main/////////////////////////////////////////////////////
 int main(void){
   conveyor_belt belt(1,10);
-
+  //Vector para almacenar los paquetes
   vector<package> pkgs;
+  //Vector para almacenar los drones
   vector<drone> drons;
+  //Iterador para recorrer ambos vectores
   vector<int>::iterator iter;
   //int w,factor;
   //if (battery<(battery-(1.5+W/100))){//conocer el estado de bateria
@@ -88,11 +90,18 @@ int main(void){
   //imprime los ids de los paquetes existentes
   iter=belt.pkgList.begin();
   while (iter!=belt.pkgList.end()) {
+    //Generacion de drones y asignacion de paquetes
     drons.push_back(genDrones(*(iter)));
     std::cout<<"Drone creado"<<std::endl;
     iter++;
   }
-  //crear los drones
+  for(int i=0;i<5;i++){
+    cout<<"\n\nEl paquete con el ID-"<<pkgs[i].id<<" tiene direccion: "<<pkgs[i].address<<endl;
+  }
+
+  for(int i=0;i<5;i++){
+    cout<<"\n\nEl drone con el ID-"<<drons[i].id<<" tiene asignado el paquete con el ID-"<<drons[i].pkgId<<endl;
+  }
 
   //linea sin importancia
   std::cout<<("\n\nHello world\n\n");
@@ -134,6 +143,7 @@ conveyor_belt::conveyor_belt(int _length, int _speed)
   srand (time(NULL));
 }
 
+//Destructor de la clase de cinta transportadora
 conveyor_belt::~conveyor_belt(){
     std::cout<<"Adios,amigos!"<<endl;
 }
@@ -162,10 +172,6 @@ package conveyor_belt::generatePkg()
       created=true;
     }
   }
-  srand(time(NULL));
-  for(int i = 0; i < 100; i++){
-
-  }
   adresss = 'A' + rand() % (('D' - 'A') + 1);
   package tempPkg(tempId,adresss/*direccion*/,0/*estado*/);
   return tempPkg;
@@ -176,8 +182,10 @@ package conveyor_belt::generatePkg()
 drone genDrones(int _pkgId)//Funcion para generar drones
 {
   //std::cout<<"\nGenerando paquetes\n\n"<<std::endl;
+  //Creacion de un id para cada drone
   int tempId;
   tempId=rand()%100 + 1;
+  //Inicializacion del drone
   drone tempDron(tempId, 0, 100,_pkgId,0);
   return tempDron;
 }
